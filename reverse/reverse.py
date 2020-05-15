@@ -39,4 +39,19 @@ class LinkedList:
         return False
 
     def reverse_list(self, node, prev):
-        pass
+        # First, we check to see if there is a node, and if there isn't, we end the recursion.
+        if not node:
+            return
+
+        # Second, we check to see if the next node exists, and if it doesn't, we set the current node as the head node. This turns the tail of the old list into the head of the reversed list.
+        if node.get_next() == None:
+            self.head = node
+            return
+
+        # Then we set the next node to a variable in order to use it as the current node when we recursively call the reverse_list() method. We also set the current node as the previous node when we call reverse_list().
+        next_node = node.get_next()
+        self.reverse_list(next_node, node)
+        
+        # Once the list has been traversed, we change the pointers by setting the next node of the new head (previously the tail) to the current node and then eliminate the pointer of the current node. We do that for each node until the list is reversed.
+        node.get_next().set_next(node)
+        node.set_next(None)
