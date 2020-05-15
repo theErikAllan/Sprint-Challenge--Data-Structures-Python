@@ -72,7 +72,7 @@ class BinarySearchTree:
     #     return False
 
 # name_1_tree = []
-i = 0
+# i = 0
 
 # for name_1 in names_1:
 #     if i == 0:
@@ -85,10 +85,14 @@ i = 0
 #     if name_1_tree.contains(name_2):
 #         duplicates.append(name_2)
 
+# First, we create a Binary Search Tree using Names as the root node.
 name_1_tree = BinarySearchTree("Names")
 
+# Second, we populate the tree by looping through the first file
 for name_1 in names_1:
     name_1_tree.insert(name_1)
+
+# Then we loop through the second file and check to see which names from the second list are in the tree we just created, and for any that return true, we append that name to the duplicates list.
 for name_2 in names_2:
     if name_1_tree.contains(name_2):
         duplicates.append(name_2)

@@ -8,20 +8,21 @@ class RingBuffer:
 
     def append(self, item):
         # The append method adds the given item to the buffer
+
+        # First, we check to see if the size of the buffer is less than the capacity
         if self.size < self.capacity:
+            # if the size of the buffer is less than the total capacity, we just append the desired item to the buffer and increase the size counter by 1
             self.storage.append(item)
-            # print("This is self.storage: ", self.storage)
             self.size += 1
-            # print("This is self.size: ", self.size)
+        # Once the size of the buffer reaches the capacity, we want to overwrite the element in the oldest index
         elif self.size == self.capacity:
+            # So we overwrite the element in the oldest index and increase self.oldest by 1 so the oldest is now 1 place to the right
             self.storage[self.oldest] = item
-            # print("This is self.storage: ", self.storage)
             self.oldest += 1
-            # print("This is self.oldest: ", self.oldest)
+            
+            # finally, once self.oldest reaches the capacity, the oldest element is now in index 0 again, so we must reset the tracker
             if self.oldest == self.capacity:
                 self.oldest = 0
-        # We need a variable to track the oldest item in the list and increase
-        # If the length equals the capacity, subtract the capacity from the variable tracking the oldest item
 
     def get(self):
         # The get method should return the present state of the ring buffer list
