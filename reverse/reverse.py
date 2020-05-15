@@ -37,45 +37,21 @@ class LinkedList:
             current = current.get_next()
 
         return False
-    def print_helper(self, node, name):
-        if node is None:
-            print(name + ": None")
-        else:
-            print(name + ":" + node.value)
 
     def reverse_list(self, node, prev):
-        # first, w
+        # First, we check to see if there is a node, and if there isn't, we end the recursion.
         if not node:
-            return prev
-        if not node.get_next():
+            return
+
+        # Second, we check to see if the next node exists, and if it doesn't, we set the current node as the head node. This turns the tail of the old list into the head of the reversed list.
+        if node.get_next() == None:
             self.head = node
-            
-        next = node.get_next()
-        node.set_next(prev)
-        # self.print_helper(next, "PREV")
-        # self.print_helper(node, "HEAD")
-        prev = node
-        node = next
-        return self.reverse_list(node=self.head, prev=None)
+            return
 
-
-        # if self.head is None or self.head.next_node is None:
-        #     return self.head
-        # else:
-        #     self.prev = self.head
-        #     self.head = self.head.next_node
-        #     self.print_helper(self.prev, "PREV")
-        #     self.print_helper(self.head, "HEAD")
-        #     self.reverse_list(self.head, self.prev)
-        # print(self.head.value)
+        # Then we set the next node to a variable in order to use it as the current node when we recursively call the reverse_list() method. We also set the current node as the previous node when we call reverse_list().
+        next_node = node.get_next()
+        self.reverse_list(next_node, node)
         
-
-llist = LinkedList()
-llist.add_to_head(1)
-llist.add_to_head(2)
-llist.add_to_head(3)
-llist.add_to_head(4)
-llist.add_to_head(5)
-print(llist)
-
-llist.reverse_list(llist.head, None)
+        # Once the list has been traversed, we change the pointers by setting the next node of the new head (previously the tail) to the current node and then eliminate the pointer of the current node. We do that for each node until the list is reversed.
+        node.get_next().set_next(node)
+        node.set_next(None)
