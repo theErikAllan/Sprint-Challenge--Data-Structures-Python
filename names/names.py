@@ -1,4 +1,7 @@
 import time
+import sys
+
+sys.setrecursionlimit(20999)
 
 start_time = time.time()
 
@@ -13,10 +16,83 @@ f.close()
 duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
+# THE RUNTIME FOR THIS STARTER CODE IS O(m*n) BECAUSE THE INPUT COMES FROM TWO DIFFERENT FILES THAT COULD BE DIFFERENT SIZES.
+# for name_1 in names_1:
+#     for name_2 in names_2:
+#         if name_1 == name_2:
+#             duplicates.append(name_1)
+
+class BinarySearchTree:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+        if value[0] < self.value[0]:
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:
+                self.left.insert(value)
+        # elif value[0] >= self.value[0]:
+        else:
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:
+                self.right.insert(value)
+    
+    def contains(self, target):
+        if target == self.value:
+            return True
+        if target[0] < self.value[0]:
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
+
+    # def contains(self, target):
+    #     current = self
+    #     while current is not None:
+    #         # if target == current.value:
+    #         #     return True
+    #         if target[0] < current.value[0]:
+    #             current = current.left
+    #         elif target[0] > current.value[0]:
+    #             current = current.right
+    #         # elif target == current.value:
+    #         #     return True
+    #         else:
+    #             print(current.value)
+    #             return True
+    #     return False
+
+# name_1_tree = []
+i = 0
+
+# for name_1 in names_1:
+#     if i == 0:
+#         name_1_tree = BinarySearchTree(name_1)
+#         i += 1
+#     else:
+#         name_1_tree.insert(name_1)
+#         i += 1
+# for name_2 in names_2:
+#     if name_1_tree.contains(name_2):
+#         duplicates.append(name_2)
+
+name_1_tree = BinarySearchTree("Names")
+
 for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+    name_1_tree.insert(name_1)
+for name_2 in names_2:
+    if name_1_tree.contains(name_2):
+        duplicates.append(name_2)
+
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
@@ -26,3 +102,5 @@ print (f"runtime: {end_time - start_time} seconds")
 # Python has built-in tools that allow for a very efficient approach to this problem
 # What's the best time you can accomplish?  Thare are no restrictions on techniques or data
 # structures, but you may not import any additional libraries that you did not write yourself.
+
+
